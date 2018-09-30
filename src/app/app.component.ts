@@ -1,18 +1,15 @@
 import { Component } from '@angular/core';
-import { Person } from './models/person';
+import { Person } from './models/person.model';
+import { FirebaseService } from './services/firebase.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [FirebaseService]
 })
 export class AppComponent {
-  constructor() {
-    console.log(new Person({
-      name: {
-        first: 'Jade',
-        last: 'test'
-      }
-    }));
+  constructor(private firebase: FirebaseService) {
+    firebase.initialize();
   }
 }
