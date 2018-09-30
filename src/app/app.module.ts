@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as firebase from 'firebase';
-
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { CallingComponent } from './components/calling/calling.component';
@@ -23,7 +23,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot([
+      { path: 'person', component: PersonComponent },
+      { path: 'country', component: CountryComponent },
+      { path: 'calling', component: CallingComponent },
+      { path: 'login', component: LoginComponent },
+      { path: '**', component: LoginComponent }]
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

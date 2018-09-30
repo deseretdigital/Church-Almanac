@@ -1,5 +1,5 @@
 <nav *ngIf="auth" class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Church Alamanac</a>
+  <a class="navbar-brand">Church Alamanac</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,13 +7,13 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Person</a>
+        <a class="nav-link" routerLink="/person">Person</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Calling</a>
+        <a class="nav-link" routerLink="/calling">Calling</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Country</a>
+        <a class="nav-link" routerLink="/country">Country</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="logout()">Logout</a>
