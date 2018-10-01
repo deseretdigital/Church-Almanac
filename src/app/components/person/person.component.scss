@@ -1,12 +1,8 @@
-div.row {
-    h1 {
-        margin-bottom: 25px;
-    }
+div.row > div {
+    margin-bottom: 25px;
+}
 
-    div input,
-    div textarea {
-        margin-bottom: 15px;
-    }
+div.row {
 
     div#emeritus {
         text-align: center;

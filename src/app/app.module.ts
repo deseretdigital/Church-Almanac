@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import * as firebase from 'firebase';
 import { RouterModule } from '@angular/router';
 
+import { KeysPipe } from './pipes/keys.pipe';
+
 import { AppComponent } from './app.component';
 import { CallingComponent } from './components/calling/calling.component';
 import { CountryComponent } from './components/country/country.component';
@@ -19,7 +21,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     CountryComponent,
     PersonComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
