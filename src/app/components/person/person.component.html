@@ -5,71 +5,99 @@
     </div>
     <!-- person form -->
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="person.name.first">
+      <span>First Name</span>
+      <input type="text" class="form-control" placeholder="John" [(ngModel)]="person.name.first">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="person.name.last">
+      <span>Last Name</span>
+      <input type="text" class="form-control" placeholder="Doe" [(ngModel)]="person.name.last">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Birth MM/DD/YYYY" [(ngModel)]="person.birth.date">
+      <span>Birth Date</span>
+      <input type="date" class="form-control" placeholder="MM/DD/YYYY" [(ngModel)]="person.birth.date">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Death MM/DD/YYYY" [(ngModel)]="person.death.date">
+      <span>Death Date</span>
+      <input type="date" class="form-control" placeholder="MM/DD/YYYY" [(ngModel)]="person.death.date">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Birth Street" [(ngModel)]="locations.birth.street">
+      <span>Birth Street</span>
+      <input type="text" class="form-control" placeholder="100 S 100 W" [(ngModel)]="person.birth.location.street">
     </div>
     <div class="col-3">
-      <select class="form-control" name="birth-countries" [(ngModel)]="locations.birth.country">
+      <span>Birth Country</span>
+      <select class="form-control" name="birth-countries" [(ngModel)]="person.birth.location.country">
         <option selected="" value="" disabled>Select Country</option>
         <option *ngFor="let country of countries | keys" value="{{ country.key }}">{{ country.value }}</option>
       </select>
     </div>
-    <div class="col-3">
-      <select class="form-control" name="birth-state" [(ngModel)]="locations.birth.state">
+    <div class="col-3" *ngIf="person.birth.location.country && states[person.birth.location.country]">
+      <span>Birth State</span>
+      <select class="form-control" name="birth-state" [(ngModel)]="person.birth.location.state">
         <option selected="" value="" disabled>Select State</option>
+        <option *ngFor="let state of states[person.birth.location.country]" value="{{ state }}">{{ state }}</option>
       </select>
     </div>
-    <div class="col-3">
-      <input type="number" class="form-control" placeholder="Birth Zip" [(ngModel)]="locations.birth.zip">
+    <div class="col-3" *ngIf="!person.birth.location.country || !states[person.birth.location.country]">
+      <span>Birth State</span>
+      <input type="number" class="form-control" placeholder="Select State" disabled>
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Death Street" [(ngModel)]="locations.death.street">
+      <span>Birth Zip</span>
+      <input type="number" class="form-control" placeholder="84100" [(ngModel)]="person.birth.location.zip">
     </div>
     <div class="col-3">
-      <select class="form-control" name="death-country" [(ngModel)]="locations.death.country">
+      <span>Death Street</span>
+      <input type="text" class="form-control" placeholder="100 S 100 E" [(ngModel)]="person.death.location.street">
+    </div>
+    <div class="col-3">
+      <span>Death Country</span>
+      <select class="form-control" name="death-country" [(ngModel)]="person.death.location.country">
         <option selected="" value="" disabled>Select Country</option>
         <option *ngFor="let country of countries | keys" value="{{ country.key }}">{{ country.value }}</option>
       </select>
     </div>
-    <div class="col-3">
-      <select class="form-control" name="death-state" [(ngModel)]="locations.death.state">
+    <div class="col-3" *ngIf="person.death.location.country && states[person.death.location.country]">
+      <span>Death State</span>
+      <select class="form-control" name="death-state" [(ngModel)]="person.death.location.state">
         <option selected="" value="" disabled>Select State</option>
+        <option *ngFor="let state of states[person.death.location.country]" value="{{ state }}">{{ state }}</option>
       </select>
     </div>
+    <div class="col-3" *ngIf="!person.death.location.country || !states[person.death.location.country]">
+      <span>Death State</span>
+      <input type="number" class="form-control" placeholder="Select State" disabled>
+    </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="Death Zip" [(ngModel)]="locations.death.zip">
+      <span>Death Zip</span>
+      <input type="number" class="form-control" placeholder="84100" [(ngModel)]="person.death.location.zip">
     </div>
     <div class="col-12">
-      <input type="text" class="form-control" placeholder="Photo URL" [(ngModel)]="person.name.photo">
+      <span>Photo URL</span>
+      <input type="text" class="form-control" placeholder="http://www.domain.com/file.jpg" [(ngModel)]="person.name.photo">
     </div>
     <div class="col-12">
-      <textarea type="text" class="form-control" placeholder="Bio" [(ngModel)]="person.name.bio"></textarea>
+      <span>Short Bio</span>
+      <textarea type="text" class="form-control" [(ngModel)]="person.name.bio"></textarea>
     </div>
     <div class="col-3" *ngIf="callings">
+      <span>Calling Name</span>
       <select class="form-control" name="death-countries" [(ngModel)]="calling.uid">
         <option selected="" value="" disabled>Select Calling</option>
         <option *ngFor="let calling of callings | keys" value="{{ calling.key }}">{{ calling.value }}</option>
       </select>
     </div>
     <div class="col-3" *ngIf="!callings">
+      <span>Callings Name</span>
       <input type="number" class="form-control" placeholder="No Callings In Database" disabled>
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Start MM/DD/YYYY" [(ngModel)]="calling.startDate">
+      <span>State Date</span>
+      <input type="date" class="form-control" placeholder="Start MM/DD/YYYY" [(ngModel)]="calling.startDate">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="End MM/DD/YYYY" [(ngModel)]="calling.endDate">
+      <span>End Dae</span>
+      <input type="date" class="form-control" placeholder="End MM/DD/YYYY" [(ngModel)]="calling.endDate">
     </div>
     <div class="col-3" id="emeritus">
       <div class="form-check">
@@ -117,7 +145,7 @@
       <h1>People List</h1>
     </div>
     <div class="col-12">
-      <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="search">
+      <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="search" (change)="refine()">
     </div>
     <div class="col-12">
       <table class="table table-dark">
@@ -129,7 +157,7 @@
           </tr>
         </thead>
         <tbody *ngIf="people">
-          <tr *ngFor="let person of people | keys">
+          <tr *ngFor="let person of people | keys; let i = index" id="result-{{ i }}">
             <td>{{ person.value.name.first }}</td>
             <td>{{ person.value.name.last }}</td>
             <td>

@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Person, PersonConfig, CallingConfig, Calling } from '../../models/person.model';
 import { countries } from '../../../environments/countries';
+import { states } from '../../../environments/states';
 import * as firebase from 'firebase';
 import { guid } from '../../services/guid.service';
 import { Location } from '../../models/location.model';
-
-interface location {
-  street: string;
-  country: string;
-  state: string;
-  zip: number;
-}
 
 @Component({
   selector: 'app-person',
@@ -21,6 +15,7 @@ interface location {
 export class PersonComponent implements OnInit {
 
   countries = countries;
+  states = states;
   uid: string = null;
   search: string = '';
   people: Object;
@@ -64,8 +59,7 @@ export class PersonComponent implements OnInit {
     this.uid = guid();
     this.alerts = [];
     this.person = Person();
-    this.locations.birth = Location()
-    this.locations.death = Location()
+    this.calling = Calling();
     this.editor.calling = false;
     this.editor.person = false;
     let modal: HTMLElement = document.querySelector('div.modal') as HTMLElement;
@@ -122,10 +116,16 @@ export class PersonComponent implements OnInit {
       // person
       firebase.database().ref(`people/${uid}`).once('value').then((snapshot) => {
         this.person = snapshot.val();
+        this.person.birth.location = (snapshot.val().birth.location) ? snapshot.val().birth.location : Location();
+        this.person.death.location = (snapshot.val().death.location) ? snapshot.val().death.location : Location();
         this.uid = uid;
         this.editor.person = true;
       });
     }
+  }
+
+  refine() {
+
   }
 
   delete() {

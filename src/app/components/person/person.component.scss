@@ -1,16 +1,21 @@
-div.row > div {
-    margin-bottom: 25px;
+div.row>div {
+    margin-bottom: 15px;
 }
 
-div.modal > div > div {
+div.modal>div>div {
     padding: 25px;
 }
 
 div.row {
 
+    div>span {
+        font-size: 0.75em;
+        font-weight: bold;
+    }
+
     div#emeritus {
         text-align: center;
-        padding-top: 5px;
+        padding-top: 25px;
     }
 
     div#emeritus * {
@@ -24,9 +29,11 @@ div.row {
                     span {
                         cursor: pointer;
                     }
+
                     span:nth-child(even) {
                         margin-left: 15px;
                     }
+
                     span.blue {
                         color: rgb(72, 121, 255);
                     }

@@ -1,37 +1,63 @@
 <div class="container">
-  <div class="row">
+  <div class="row" *ngIf="year">
     <div class="col-12">
       <h1>Countries</h1>
     </div>
     <div class="col-6">
-      <select class="form-control" name="birth-countries">
-        <option selected="" value="" disabled>Select Country</option>
+      <select class="form-control" name="birth-countries" (change)="select()" [(ngModel)]="this.uid">
+        <option selected="" value="null" disabled>Select Country</option>
         <option *ngFor="let country of countries | keys" value="{{ country.key }}">{{ country.value }}</option>
       </select>
     </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="Year">
+      <input type="number" class="form-control" placeholder="Year" [(ngModel)]="year.year" (change)="edit()">
     </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="First Stake">
+      <input type="date" class="form-control" placeholder="First Stake MM/DD/YYYY" [(ngModel)]="year.stake">
     </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="Population">
+      <input type="number" class="form-control" placeholder="Population" [(ngModel)]="year.population">
     </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="Membership">
+      <input type="number" class="form-control" placeholder="Membership" [(ngModel)]="year.membership">
     </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="Branches in wards">
+      <input type="number" class="form-control" placeholder="Branches in wards" [(ngModel)]="year.branches.wards">
     </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="Branches in missions">
+      <input type="number" class="form-control" placeholder="Branches in missions" [(ngModel)]="year.branches.missions">
     </div>
     <div class="col-12">
-      <textarea placeholder="History" class="form-control"></textarea>
+      <textarea placeholder="History" class="form-control" [(ngModel)]="country.history"></textarea>
+    </div>
+    <div class="col-12" *ngIf="country.years && (country.years | keys).length > 0">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let year of country.years | keys" >
+            <a class="page-link"(click)="edit(year.key)">
+              {{ year.key }}
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
     <div class="col-12">
-      <button class="btn btn-primary">Save</button>
+        <div class="alert alert-primary" role="alert" *ngFor="let alert of alerts">{{ alert }}</div>
+    </div>
+    <div class="col-12" *ngIf="uid">
+      <button class="btn btn-primary" (click)="save()">Save Updates</button>
     </div>
   </div>
 </div>
