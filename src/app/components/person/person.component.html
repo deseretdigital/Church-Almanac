@@ -5,98 +5,106 @@
     </div>
     <!-- person form -->
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="First Name">
+      <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="person.name.first">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Last Name">
+      <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="person.name.last">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Birth MM/DD/YYYY">
+      <input type="text" class="form-control" placeholder="Birth MM/DD/YYYY" [(ngModel)]="person.birth.date">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Death MM/DD/YYYY">
+      <input type="text" class="form-control" placeholder="Death MM/DD/YYYY" [(ngModel)]="person.death.date">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Birth Street">
+      <input type="text" class="form-control" placeholder="Birth Street" [(ngModel)]="locations.birth.street">
     </div>
     <div class="col-3">
-      <select class="form-control" name="birth-countries">
+      <select class="form-control" name="birth-countries" [(ngModel)]="locations.birth.country">
         <option selected="" value="" disabled>Select Country</option>
       </select>
     </div>
     <div class="col-3">
-      <select class="form-control" name="birth-state">
+      <select class="form-control" name="birth-state" [(ngModel)]="locations.birth.state">
         <option selected="" value="" disabled>Select State</option>
       </select>
     </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="Birth Zip">
+      <input type="number" class="form-control" placeholder="Birth Zip" [(ngModel)]="locations.birth.zip">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Death Street">
+      <input type="text" class="form-control" placeholder="Death Street" [(ngModel)]="locations.death.street">
     </div>
     <div class="col-3">
-      <select class="form-control" name="death-countries">
+      <select class="form-control" name="death-country" [(ngModel)]="locations.death.country">
         <option selected="" value="" disabled>Select Country</option>
       </select>
     </div>
     <div class="col-3">
-      <select class="form-control" name="death-state">
+      <select class="form-control" name="death-state" [(ngModel)]="locations.death.state">
         <option selected="" value="" disabled>Select State</option>
       </select>
     </div>
     <div class="col-3">
-      <input type="number" class="form-control" placeholder="Death Zip">
+      <input type="number" class="form-control" placeholder="Death Zip" [(ngModel)]="locations.death.zip">
     </div>
     <div class="col-12">
-      <input type="text" class="form-control" placeholder="Photo URL">
+      <input type="text" class="form-control" placeholder="Photo URL" [(ngModel)]="person.name.photo">
     </div>
     <div class="col-12">
-      <textarea type="text" class="form-control" placeholder="Bio"></textarea>
+      <textarea type="text" class="form-control" placeholder="Bio" [(ngModel)]="person.name.bio"></textarea>
     </div>
     <div class="col-3">
-      <select class="form-control" name="death-countries">
+      <select class="form-control" name="death-countries" [(ngModel)]="calling.uid">
         <option selected="" value="" disabled>Select Calling</option>
+        <option *ngFor="let calling of callings | keys" value="{{ calling.key }}">{{ calling.value }}</option>
       </select>
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Start MM/DD/YYYY">
+      <input type="text" class="form-control" placeholder="Start MM/DD/YYYY" [(ngModel)]="calling.startDate">
     </div>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="End MM/DD/YYYY">
+      <input type="text" class="form-control" placeholder="End MM/DD/YYYY" [(ngModel)]="calling.endDate">
     </div>
     <div class="col-3" id="emeritus">
       <div class="form-check">
-        <input class="form-check-input" id="emeritus-checkbox" type="checkbox" value="">
+        <input class="form-check-input" id="emeritus-checkbox" type="checkbox" value="true" [(ngModel)]="calling.emeritus">
         <label class="form-check-label" for="emeritus-checkbox">
           Emeritus
         </label>
       </div>
     </div>
     <div class="col-12">
-        <table class="table table-dark">
-            <thead>
-              <tr>
-                <th scope="col">Calling</th>
-                <th scope="col">Start</th>
-                <th scope="col">Options</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Test Calling Name</td>
-                <td>1/1/18</td>
-                <td>
-                  <span (click)="edit()" class="blue">Edit</span>
-                  <span (click)="remove()" class="red">Remove</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Calling</th>
+            <th scope="col">Start</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="person.callings">
+          <tr *ngFor="let calling of person.callings; let i = index">
+            <td *ngIf="callings[calling.uid]">{{ callings[calling.uid] }}</td>
+            <td *ngIf="!callings[calling.uid]">This calling was not found...</td>
+            <td *ngIf="calling.startDate">{{ calling.startDate }}</td>
+            <td *ngIf="!calling.startDate"></td>
+            <td>
+              <span (click)="edit(i)" class="blue">Edit</span>
+              <span (click)="remove(i)" class="red">Remove</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12" *ngIf="alerts">
+      <div class="alert alert-primary" role="alert" *ngFor="let alert of alerts">{{ alert }}</div>
     </div>
     <div class="col-12">
-      <button class="btn btn-secondary">Add Calling</button>
-      <button class="btn btn-primary">Save Person</button>
+      <button class="btn btn-secondary" *ngIf="!editor.calling" (click)="add()">Add Calling</button>
+      <button class="btn btn-secondary" *ngIf="editor.calling" (click)="add()">Save Calling</button>
+      <button class="btn btn-primary" *ngIf="!editor.person" (click)="save()">Add Person</button>
+      <button class="btn btn-primary" *ngIf="editor.person" (click)="save()">Save Person</button>
     </div>
     <!-- people -->
     <div class="col-12">
@@ -104,7 +112,7 @@
       <h1>People List</h1>
     </div>
     <div class="col-12">
-        <input type="text" class="form-control" placeholder="Search...">
+      <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="search">
     </div>
     <div class="col-12">
       <table class="table table-dark">
@@ -115,13 +123,13 @@
             <th scope="col">Options</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Mark</td>
-            <td>Otto</td>
+        <tbody *ngIf="people">
+          <tr *ngFor="let person of people | keys">
+            <td>{{ person.value.name.first }}</td>
+            <td>{{ person.value.name.last }}</td>
             <td>
-              <span (click)="edit()" class="blue">Edit</span>
-              <span (click)="delete()" class="red">Delete</span>
+              <span (click)="edit(person.key)" class="blue">Edit</span>
+              <span (click)="delete(person.key)" class="red">Delete</span>
             </td>
           </tr>
         </tbody>
