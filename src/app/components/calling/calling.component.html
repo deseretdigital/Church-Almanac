@@ -3,16 +3,21 @@
     <div class="col-12">
       <h1>Callings</h1>
     </div>
-    <div class="col-5">
-      <select class="form-control" name="birth-countries">
+    <div class="col-5" *ngIf="callings">
+      <select class="form-control" name="birth-countries" [(ngModel)]="selected" (change)="edit()">
         <option selected="" value="" disabled>Select Calling</option>
+        <option *ngFor="let calling of callings | keys" value="{{ calling.key }}">{{ calling.value }}</option>
       </select>
     </div>
+    <div class="col-5" *ngIf="!callings">
+      <input type="text" class="form-control" placeholder="No Callings In Database" disabled>
+    </div>
     <div class="col-5">
-      <input type="text" class="form-control" placeholder="Name">
+      <input type="text" class="form-control" placeholder="Name" [(ngModel)]="name">
     </div>
     <div class="col-2">
-      <button class="btn btn-primary">Add Calling</button>
+      <button class="btn btn-primary" *ngIf="!editing" (click)="add()">Add Calling</button>
+      <button class="btn btn-primary" *ngIf="editing" (click)="add()">Save Calling</button>
     </div>
   </div>
 </div>

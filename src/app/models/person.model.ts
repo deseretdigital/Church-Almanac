@@ -1,3 +1,5 @@
+import { Location, LocationConfig } from './location.model';
+
 export interface CallingConfig {
     uid?: string;
     stateDate?: Date | '';
@@ -12,11 +14,11 @@ export interface PersonConfig {
     }
     death: {
         date: Date | '';
-        location: string;
+        location: LocationConfig;
     }
     birth: {
         date: Date | '';
-        location: string;
+        location: LocationConfig;
     }
     photo: string;
     bio: string;
@@ -40,11 +42,11 @@ export function Person(): PersonConfig {
         },
         death: {
             date: '',
-            location: '',
+            location: Location()
         },
         birth: {
             date: '',
-            location: '',
+            location: Location()
         },
         photo: '',
         bio: '',

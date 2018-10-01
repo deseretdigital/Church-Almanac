@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Person, PersonConfig, CallingConfig, Calling } from '../../models/person.model';
-import { environment } from '../../../environments/environment';
+import { countries } from '../../../environments/countries';
 import * as firebase from 'firebase';
 import { guid } from '../../services/guid.service';
+import { Location } from '../../models/location.model';
 
 interface location {
   street: string;
@@ -19,21 +20,16 @@ interface location {
 
 export class PersonComponent implements OnInit {
 
+  countries = countries;
   uid: string = null;
   search: string = '';
-  people = environment.people;
+  people: Object;
   person: PersonConfig = Person();
   calling: CallingConfig = Calling();
-  callings = environment.callings;
-  location: location = {
-    street: '',
-    country: '',
-    state: '',
-    zip: null
-  }
+  callings: Object;
   locations: any = {
-    birth: this.location,
-    death: this.location
+    birth: Location(),
+    death: Location()
   }
   alerts: Array<string> = [];
   editor: any = {
@@ -45,6 +41,9 @@ export class PersonComponent implements OnInit {
     this.uid = guid();
     firebase.database().ref('people/').on('value', (snapshot) => {
       this.people = snapshot.val();
+    });
+    firebase.database().ref('callings/').on('value', (snapshot) => {
+      this.callings = snapshot.val();
     });
   }
 
@@ -65,10 +64,12 @@ export class PersonComponent implements OnInit {
     this.uid = guid();
     this.alerts = [];
     this.person = Person();
-    this.locations.birth = this.location;
-    this.locations.death = this.location;
+    this.locations.birth = Location()
+    this.locations.death = Location()
     this.editor.calling = false;
     this.editor.person = false;
+    let modal: HTMLElement = document.querySelector('div.modal') as HTMLElement;
+    modal.click();
   }
 
   add() {
@@ -125,6 +126,13 @@ export class PersonComponent implements OnInit {
         this.editor.person = true;
       });
     }
+  }
+
+  delete() {
+    firebase.database().ref(`people/${this.uid}`).remove().then(() => {
+      this.reset();
+      this.alert('Person was successfully removed!');
+    });
   }
 
   remove(index) {

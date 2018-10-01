@@ -4,17 +4,5 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-  countries: {},
-  callings: {
-    lksmflkdmflksdma: 'Missionary'
-  },
-  people: {
-    tesldfmslkdfmldskmf: {
-      name: {
-        first: 'John',
-        last: 'Smith'
-      }
-    }
-  }
+  production: false
 };

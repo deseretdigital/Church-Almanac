@@ -22,6 +22,7 @@
     <div class="col-3">
       <select class="form-control" name="birth-countries" [(ngModel)]="locations.birth.country">
         <option selected="" value="" disabled>Select Country</option>
+        <option *ngFor="let country of countries | keys" value="{{ country.key }}">{{ country.value }}</option>
       </select>
     </div>
     <div class="col-3">
@@ -38,6 +39,7 @@
     <div class="col-3">
       <select class="form-control" name="death-country" [(ngModel)]="locations.death.country">
         <option selected="" value="" disabled>Select Country</option>
+        <option *ngFor="let country of countries | keys" value="{{ country.key }}">{{ country.value }}</option>
       </select>
     </div>
     <div class="col-3">
@@ -54,11 +56,14 @@
     <div class="col-12">
       <textarea type="text" class="form-control" placeholder="Bio" [(ngModel)]="person.name.bio"></textarea>
     </div>
-    <div class="col-3">
+    <div class="col-3" *ngIf="callings">
       <select class="form-control" name="death-countries" [(ngModel)]="calling.uid">
         <option selected="" value="" disabled>Select Calling</option>
         <option *ngFor="let calling of callings | keys" value="{{ calling.key }}">{{ calling.value }}</option>
       </select>
+    </div>
+    <div class="col-3" *ngIf="!callings">
+      <input type="number" class="form-control" placeholder="No Callings In Database" disabled>
     </div>
     <div class="col-3">
       <input type="text" class="form-control" placeholder="Start MM/DD/YYYY" [(ngModel)]="calling.startDate">
@@ -129,11 +134,25 @@
             <td>{{ person.value.name.last }}</td>
             <td>
               <span (click)="edit(person.key)" class="blue">Edit</span>
-              <span (click)="delete(person.key)" class="red">Delete</span>
+              <span data-toggle="modal" data-target="#warning" (click)="uid = person.key" class="red">Delete</span>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="warning" id="warning"
+  aria-hidden="true" (click)="reset()">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <h1>Are you sure?</h1>
+      <br />
+      <button class="btn btn-primary" (click)="delete()">Delete Person</button>
+      <br />
+      <button class="btn btn-secondary" (click)="reset()">Cancel</button>
     </div>
   </div>
 </div>
