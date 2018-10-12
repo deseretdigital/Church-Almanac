@@ -19,6 +19,7 @@ export class PersonComponent implements OnInit {
   uid: string = null;
   search: string = '';
   people: Object;
+  results: Object;
   person: PersonConfig = Person();
   calling: CallingConfig = Calling();
   callings: Object;
@@ -36,6 +37,7 @@ export class PersonComponent implements OnInit {
     this.uid = guid();
     firebase.database().ref('people/').on('value', (snapshot) => {
       this.people = snapshot.val();
+      this.results = this.people;
     });
     firebase.database().ref('callings/').on('value', (snapshot) => {
       this.callings = snapshot.val();
@@ -125,7 +127,26 @@ export class PersonComponent implements OnInit {
   }
 
   refine() {
+    let keys = Object.keys(this.people);
+    this.results = {};
+    keys = keys.filter(key => {
+      const person = this.people[key];
+      if (
+        (
+          person.name.first ||
+          person.name.last
+        ) && (
+          person.name.first.toLowerCase().indexOf(this.search.toLowerCase()) !== -1 ||
+          person.name.last.toLowerCase().indexOf(this.search.toLowerCase()) !== -1
 
+        )
+      ) {
+        return key;
+      }
+    });
+    keys.forEach(key => {
+      this.results[key] = this.people[key];
+    });
   }
 
   delete() {

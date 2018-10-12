@@ -8,11 +8,6 @@ div.modal>div>div {
 
 div.row {
 
-    div>span {
-        font-size: 0.75em;
-        font-weight: bold;
-    }
-
     div#emeritus {
         text-align: center;
         padding-top: 25px;
@@ -22,27 +17,4 @@ div.row {
         cursor: pointer;
     }
 
-    table {
-        tbody {
-            tr {
-                td {
-                    span {
-                        cursor: pointer;
-                    }
-
-                    span:nth-child(even) {
-                        margin-left: 15px;
-                    }
-
-                    span.blue {
-                        color: rgb(72, 121, 255);
-                    }
-
-                    span.red {
-                        color: rgb(255, 75, 75);
-                    }
-                }
-            }
-        }
-    }
 }

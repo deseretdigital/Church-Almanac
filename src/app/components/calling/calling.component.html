@@ -19,5 +19,24 @@
       <button class="btn btn-primary" *ngIf="!editing" (click)="add()">Add Calling</button>
       <button class="btn btn-primary" *ngIf="editing" (click)="add()">Save Calling</button>
     </div>
+    <div class="col-12">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Calling</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="callings">
+          <tr *ngFor="let calling of callings | keys; let i = index">
+            <td>{{ calling.value }}</td>
+            <td>
+              <span (click)="edit(calling.key)" class="blue">Edit</span>
+              <span (click)="remove(calling.key)" class="red">Remove</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

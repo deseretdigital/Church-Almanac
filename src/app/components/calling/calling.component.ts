@@ -13,7 +13,7 @@ export class CallingComponent implements OnInit {
   uid: string = guid();
   editing: boolean = false;
   name: string = '';
-  selected:string = '';
+  selected: string = '';
 
   constructor() {
     firebase.database().ref('callings/').on('value', (snapshot) => {
@@ -28,10 +28,17 @@ export class CallingComponent implements OnInit {
     this.uid = guid();
   }
 
-  edit() {
+  edit(key?) {
     this.editing = true;
+    if (key) {
+      this.selected = key;
+    }
     this.uid = this.selected;
     this.name = this.callings[this.uid];
+  }
+
+  remove(key) {
+    firebase.database().ref(`callings/${key}`).remove();
   }
 
   add() {
