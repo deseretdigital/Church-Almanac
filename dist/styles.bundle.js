@@ -3,7 +3,7 @@ webpackJsonp(["styles"],{
 /***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js??embedded!./node_modules/sass-loader/lib/loader.js??ref--8-3!./src/styles.scss":
 /***/ (function(module, exports) {
 
-module.exports = "/* You can add global styles to this file, and also import other style files */\ntable tbody tr td span {\n  cursor: pointer; }\ntable tbody tr td span:nth-child(even) {\n  margin-left: 15px; }\ntable tbody tr td span.blue {\n  color: #4879ff; }\ntable tbody tr td span.red {\n  color: #ff4b4b; }\ndiv.row div > span {\n  font-size: 0.75em;\n  font-weight: bold; }\n"
+module.exports = "/* You can add global styles to this file, and also import other style files */\ntable tbody tr td span {\n  cursor: pointer; }\ntable tbody tr td span:nth-child(even) {\n  margin-left: 15px; }\ntable tbody tr td span.blue {\n  color: #4879ff; }\ntable tbody tr td span.red {\n  color: #ff4b4b; }\ndiv.row > div {\n  margin-bottom: 15px; }\ndiv.row div > span {\n  font-size: 0.75em;\n  font-weight: bold; }\n"
 
 /***/ }),
 

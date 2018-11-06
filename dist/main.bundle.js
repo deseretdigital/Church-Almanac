@@ -83,6 +83,7 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_person_person_component__ = __webpack_require__("./src/app/components/person/person.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_login_login_component__ = __webpack_require__("./src/app/components/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__ = __webpack_require__("./src/app/components/navbar/navbar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_temple_temple_component__ = __webpack_require__("./src/app/components/temple/temple.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -92,6 +93,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -124,7 +126,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_9__components_person_person_component__["a" /* PersonComponent */],
                 __WEBPACK_IMPORTED_MODULE_10__components_login_login_component__["a" /* LoginComponent */],
                 __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__["a" /* NavbarComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__pipes_keys_pipe__["a" /* KeysPipe */]
+                __WEBPACK_IMPORTED_MODULE_5__pipes_keys_pipe__["a" /* KeysPipe */],
+                __WEBPACK_IMPORTED_MODULE_12__components_temple_temple_component__["a" /* TempleComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -133,6 +136,7 @@ var AppModule = /** @class */ (function () {
                     { path: 'person', component: __WEBPACK_IMPORTED_MODULE_9__components_person_person_component__["a" /* PersonComponent */] },
                     { path: 'country', component: __WEBPACK_IMPORTED_MODULE_8__components_country_country_component__["a" /* CountryComponent */] },
                     { path: 'calling', component: __WEBPACK_IMPORTED_MODULE_7__components_calling_calling_component__["a" /* CallingComponent */] },
+                    { path: 'temple', component: __WEBPACK_IMPORTED_MODULE_12__components_temple_temple_component__["a" /* TempleComponent */] },
                     { path: 'login', component: __WEBPACK_IMPORTED_MODULE_10__components_login_login_component__["a" /* LoginComponent */] },
                     { path: '**', component: __WEBPACK_IMPORTED_MODULE_10__components_login_login_component__["a" /* LoginComponent */] }
                 ])
@@ -437,7 +441,7 @@ var LoginComponent = /** @class */ (function () {
 /***/ "./src/app/components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav *ngIf=\"auth\" class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <a class=\"navbar-brand\">Church Alamanac</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\"\n    aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n    <ul class=\"navbar-nav\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/person\">People</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/calling\">Callings</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/country\">Countries</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" (click)=\"logout()\">Logout</a>\n      </li>\n    </ul>\n  </div>\n</nav>"
+module.exports = "<nav *ngIf=\"auth\" class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <a class=\"navbar-brand\">Church Alamanac</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\"\n    aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n    <ul class=\"navbar-nav\">\n      <li class=\"nav-item {{ (route === '/person') ? 'active' : null }}\">\n        <a class=\"nav-link\" routerLink=\"/person\">People</a>\n      </li>\n      <li class=\"nav-item {{ (route === '/calling') ? 'active' : null }}\">\n        <a class=\"nav-link\" routerLink=\"/calling\">Callings</a>\n      </li>\n      <li class=\"nav-item {{ (route === '/country') ? 'active' : null }}\">\n        <a class=\"nav-link\" routerLink=\"/country\">Countries</a>\n      </li>\n      <li class=\"nav-item {{ (route === '/temple') ? 'active' : null }}\">\n        <a class=\"nav-link\" routerLink=\"/temple\">Temples</a>\n      </li>\n      <li class=\"nav-item {{ (route === '/login') ? 'active' : null }}\">\n        <a class=\"nav-link\" (click)=\"logout()\">Logout</a>\n      </li>\n    </ul>\n  </div>\n</nav>"
 
 /***/ }),
 
@@ -474,10 +478,14 @@ var NavbarComponent = /** @class */ (function () {
         var _this = this;
         this.Router = Router;
         this.auth = false;
+        this.route = null;
+        Router.events.subscribe(function (route) {
+            _this.route = (route.url) ? route.url : null;
+        });
         __WEBPACK_IMPORTED_MODULE_1_firebase__["auth"]().onAuthStateChanged(function (user) {
             if (user) {
                 _this.auth = true;
-                Router.navigateByUrl('/person');
+                Router.navigateByUrl('/temple');
             }
             else {
                 _this.auth = false;
@@ -515,7 +523,7 @@ module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div cla
 /***/ "./src/app/components/person/person.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = "div.row > div {\n  margin-bottom: 15px; }\n\ndiv.modal > div > div {\n  padding: 25px; }\n\ndiv.row div#emeritus {\n  text-align: center;\n  padding-top: 25px; }\n\ndiv.row div#emeritus * {\n  cursor: pointer; }\n"
+module.exports = "div.modal > div > div {\n  padding: 25px; }\n\ndiv.row div#emeritus {\n  text-align: center;\n  padding-top: 25px; }\n\ndiv.row div#emeritus * {\n  cursor: pointer; }\n"
 
 /***/ }),
 
@@ -706,6 +714,168 @@ var PersonComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/temple/temple.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-12\">\n      <h1>New Temple</h1>\n      <br />\n    </div>\n    <div class=\"col-3\">\n      <span>Temple Name</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Salt Lake Temple\" [(ngModel)]=\"temple.name\">\n    </div>\n    <div class=\"col-3\">\n      <span>Status</span>\n      <select class=\"form-control\" [(ngModel)]=\"temple.status\">\n        <option value=\"0\">Status 1</option>\n        <option value=\"1\">Status 2</option>\n        <option value=\"2\">Status 3</option>\n        <option value=\"3\">Status 4</option>\n      </select>\n    </div>\n    <div class=\"col-3\">\n      <span>Phone</span>\n      <input type=\"number\" class=\"form-control\" placeholder=\"(555) 555-5555\" [(ngModel)]=\"temple.phone\">\n    </div>\n    <div class=\"col-3\">\n      <span>Email</span>\n      <input type=\"email\" class=\"form-control\" placeholder=\"contact@temple.com\" [(ngModel)]=\"temple.email\">\n    </div>\n    <div class=\"col-12\">\n      <span>Temple Description</span>\n      <textarea type=\"text\" class=\"form-control\" placeholder=\"Dedicated in 1893, it is the sixth temple completed by the church...\"\n        [(ngModel)]=\"temple.description\"></textarea>\n    </div>\n    <div class=\"col-3\">\n      <span>Street Address Line 1</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"100 S 100 W\" [(ngModel)]=\"temple.street1\">\n    </div>\n    <div class=\"col-3\">\n      <span>Street Address Line 2</span>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"temple.street2\">\n    </div>\n    <div class=\"col-3\">\n      <span>Country</span>\n      <select class=\"form-control\" name=\"birth-countries\" [(ngModel)]=\"temple.country\">\n        <option value=\"\" selected disabled>Country</option>\n        <option *ngFor=\"let country of countries | keys\" value=\"{{ country.key }}\">{{ country.value }}</option>\n      </select>\n    </div>\n    <div class=\"col-3\" *ngIf=\"temple.country && states[temple.country]\">\n      <span>State/Providence</span>\n      <select class=\"form-control\" name=\"birth-state\" [(ngModel)]=\"temple.state\">\n        <option selected=\"\" value=\"\" disabled>Select State</option>\n        <option *ngFor=\"let state of states[temple.country]\" value=\"{{ state }}\">{{ state }}</option>\n      </select>\n    </div>\n    <div class=\"col-3\" *ngIf=\"!temple.country || !states[temple.country]\">\n      <span>State/Providence</span>\n      <input type=\"number\" class=\"form-control\" placeholder=\"Select State\" disabled>\n    </div>\n    <div class=\"col-12\">\n      <span>Location Description</span>\n      <textarea type=\"text\" class=\"form-control\" placeholder=\"The Salt Lake Temple is the centerpiece of the 10-acre Temple Square...\"\n        [(ngModel)]=\"temple.location\"></textarea>\n    </div>\n    <div class=\"col-3\">\n      <span>Date</span>\n      <input type=\"date\" class=\"form-control\" placeholder=\"1/1/18\" [(ngModel)]=\"event.date\">\n    </div>\n    <div class=\"col-3\">\n      <span>Event</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Dedicated\" [(ngModel)]=\"event.event\">\n    </div>\n    <div class=\"col-3\">\n      <span>Saved Events</span><br />\n      <input type=\"text\" *ngIf=\"!events.length\" class=\"form-control\" placeholder=\"No Events\" disabled>\n      <select class=\"form-control\" id=\"events\" *ngIf=\"events.length\" (change)=\"editEvent($event)\">\n        <option value=\"null\" select disabled>Choose Event</option>\n        <option *ngFor=\"let x of events; let i = index\" value=\"{{ i }}\">{{ x.event }}</option>\n      </select>\n    </div>\n    <div class=\"col-3\">\n      <br />\n      <button class=\"btn btn-primary\" id=\"add-date\" *ngIf=\"editor.event === null\" (click)=\"addEvent()\">Add Date</button>\n      <button class=\"btn btn-primary\" id=\"add-date\" *ngIf=\"editor.event !== null\" (click)=\"addEvent()\">Save Date</button>\n    </div>\n    <div class=\"col-3\">\n      <span>Exterior Finish</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Brick\" [(ngModel)]=\"temple.architecture.exterior\">\n    </div>\n    <div class=\"col-3\">\n      <span>Temple Design</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Modern\" [(ngModel)]=\"temple.architecture.design\">\n    </div>\n    <div class=\"col-3\">\n      <span>Rooms</span>\n      <input type=\"number\" class=\"form-control\" placeholder=\"50\" [(ngModel)]=\"temple.architecture.rooms\">\n    </div>\n    <div class=\"col-3\">\n      <span>Floor Area</span>\n      <input type=\"number\" class=\"form-control\" placeholder=\"30000\" [(ngModel)]=\"temple.architecture.area\">\n    </div>\n    <div class=\"col-3\">\n      <span>Dimensions</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"300 x 300 x 300\" [(ngModel)]=\"temple.architecture.dimensions\">\n    </div>\n    <div class=\"col-3\">\n      <span>Architect</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.architect\">\n    </div>\n    <div class=\"col-3\">\n      <span>Supervising Architects</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith, Jane Doe\" [(ngModel)]=\"temple.architecture.supervisor\">\n    </div>\n    <div class=\"col-3\">\n      <span>Construction Advisor</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.advisor\">\n    </div>\n    <div class=\"col-3\">\n      <span>Contractor</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.contractor\">\n    </div>\n    <div class=\"col-3\">\n      <span>Building Committee</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.buildingCommittee\">\n    </div>\n    <div class=\"col-3\">\n      <span>Master Builder</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.builder\">\n    </div>\n    <div class=\"col-3\">\n      <span>Temple Building Committee</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.templeCommittee\">\n    </div>\n    <div class=\"col-3\">\n      <span>Project Manager</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.project.manager\">\n    </div>\n    <div class=\"col-3\">\n      <span>Project Director</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.project.director\">\n    </div>\n    <div class=\"col-3\">\n      <span>Project Superintendent</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.project.superintendent\">\n    </div>\n    <div class=\"col-3\">\n      <span>Dedicator</span>\n      <input type=\"text\" class=\"form-control\" placeholder=\"John Smith\" [(ngModel)]=\"temple.architecture.dedicator\">\n    </div>\n    <div class=\"col-12\">\n      <span>Dedicatory Prayer</span>\n      <textarea type=\"text\" id=\"prayer\" class=\"form-control\" [(ngModel)]=\"temple.architecture.prayer\"></textarea>\n    </div>\n    <div class=\"col-12\">\n      <br />\n      <button class=\"btn btn-primary\" *ngIf=\"!editor.save\" (click)=\"save()\">Add Temple</button>\n      <button class=\"btn btn-primary\" *ngIf=\"editor.save\" (click)=\"save()\">Save Temple</button>\n      <button class=\"btn btn-secondary\" (click)=\"reset()\">Clear</button>\n    </div>\n    <div class=\"col-12\">\n      <br />\n      <h1>Temples List</h1>\n    </div>\n    <div class=\"col-12\">\n      <input type=\"text\" class=\"form-control\" placeholder=\"Search...\" [(ngModel)]=\"search\" (keyup)=\"refine()\">\n    </div>\n    <div class=\"col-12\">\n      <table class=\"table table-dark\">\n        <thead>\n          <tr>\n            <th scope=\"col\">Name</th>\n            <th scope=\"col\">State</th>\n            <th scope=\"col\">Options</th>\n          </tr>\n        </thead>\n        <tbody *ngIf=\"results\">\n          <tr *ngFor=\"let location of results | keys; let i = index\" id=\"result-{{ i }}\">\n            <td>{{ location.value.name }}</td>\n            <td>{{ location.value.state }}</td>\n            <td>\n              <span (click)=\"edit(location.key)\" class=\"blue\">Edit</span>\n              <span data-toggle=\"modal\" data-target=\"#warning\" (click)=\"editor.uid = location.key\" class=\"red\">Delete</span>\n            </td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>\n\n\n<div class=\"modal fade bd-example-modal-lg\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"warning\" id=\"warning\"\n  aria-hidden=\"true\" (click)=\"reset()\">\n  <div class=\"modal-dialog modal-sm\">\n    <div class=\"modal-content\">\n      <h1>Are you sure?</h1>\n      <br />\n      <button class=\"btn btn-primary\" (click)=\"delete()\" data-dismiss=\"modal\">Delete Temple</button>\n      <br />\n      <button class=\"btn btn-secondary\" (click)=\"reset()\" data-dismiss=\"modal\">Cancel</button>\n    </div>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/components/temple/temple.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = "textarea#prayer {\n  height: 150px; }\n\nbutton#add-date {\n  width: 100%; }\n"
+
+/***/ }),
+
+/***/ "./src/app/components/temple/temple.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TempleComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_temple_model__ = __webpack_require__("./src/app/models/temple.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__("./node_modules/firebase/dist/index.cjs.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_countries__ = __webpack_require__("./src/environments/countries.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_states__ = __webpack_require__("./src/environments/states.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_guid_service__ = __webpack_require__("./src/app/services/guid.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var TempleComponent = /** @class */ (function () {
+    function TempleComponent() {
+        var _this = this;
+        this.countries = __WEBPACK_IMPORTED_MODULE_3__environments_countries__["a" /* countries */];
+        this.states = __WEBPACK_IMPORTED_MODULE_4__environments_states__["a" /* states */];
+        this.temples = Object;
+        this.results = Object;
+        this.temple = new __WEBPACK_IMPORTED_MODULE_1__models_temple_model__["a" /* Temple */]({
+            name: '',
+            architecture: {
+                project: {}
+            }
+        });
+        this.event = {
+            date: '',
+            event: ''
+        };
+        this.editor = {
+            uid: '',
+            save: false,
+            event: null
+        };
+        this.reset();
+        __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref('temples/').on('value', function (snapshot) {
+            if (snapshot.val()) {
+                _this.temples = _this.results = snapshot.val();
+            }
+        });
+    }
+    TempleComponent.prototype.editEvent = function (event) {
+        event = parseInt(event.target.value);
+        this.editor.event = event;
+        this.event = this.events[this.editor.event];
+    };
+    TempleComponent.prototype.resetEvent = function () {
+        var elem = document.querySelector('select#events');
+        if (elem) {
+            elem.value = null;
+        }
+        this.editor.event = null;
+        this.event.event = '';
+        this.event.date = '';
+    };
+    TempleComponent.prototype.addEvent = function () {
+        if (this.editor.event >= 0 && this.editor.event !== null) {
+            this.events[this.editor.event] = JSON.parse(JSON.stringify(this.event));
+        }
+        else {
+            this.events.push({
+                event: this.event.event,
+                date: this.event.date
+            });
+        }
+        this.resetEvent();
+    };
+    TempleComponent.prototype.reset = function () {
+        this.editor.save = false;
+        this.resetEvent();
+        this.events = [];
+        this.editor.uid = Object(__WEBPACK_IMPORTED_MODULE_5__services_guid_service__["a" /* guid */])();
+        this.events = [];
+        this.event.event = '';
+        this.event.date = '';
+        this.temple = new __WEBPACK_IMPORTED_MODULE_1__models_temple_model__["a" /* Temple */]({
+            name: '',
+            architecture: {
+                project: {}
+            }
+        });
+    };
+    TempleComponent.prototype.edit = function (key) {
+        var _this = this;
+        this.reset();
+        __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref("temples/" + key).once('value', function (snapshot) {
+            _this.editor.uid = key;
+            _this.temple = new __WEBPACK_IMPORTED_MODULE_1__models_temple_model__["a" /* Temple */](snapshot.val());
+            if (!_this.temple.architecture) {
+                _this.temple.architecture = {};
+            }
+            if (!_this.temple.architecture.project) {
+                _this.temple.architecture.project = {};
+            }
+            if (_this.temple.dates) {
+                _this.events = _this.temple.dates;
+            }
+            _this.editor.save = true;
+            window.scrollTo(0, 0);
+        });
+    };
+    TempleComponent.prototype.save = function () {
+        var _this = this;
+        if (this.temple.name) {
+            this.temple.dates = this.events;
+            __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref("temples/" + this.editor.uid).set(this.temple).then(function () {
+                _this.reset();
+            });
+        }
+    };
+    TempleComponent.prototype.delete = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref("temples/" + this.editor.uid).remove().then(function () {
+            _this.reset();
+        });
+    };
+    TempleComponent.prototype.ngOnInit = function () {
+    };
+    TempleComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-temple',
+            template: __webpack_require__("./src/app/components/temple/temple.component.html"),
+            styles: [__webpack_require__("./src/app/components/temple/temple.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TempleComponent);
+    return TempleComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/models/country.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -787,6 +957,22 @@ function Person() {
         callings: []
     };
 }
+
+
+/***/ }),
+
+/***/ "./src/app/models/temple.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Temple; });
+var Temple = /** @class */ (function () {
+    function Temple(config) {
+        return config;
+    }
+    return Temple;
+}());
+
 
 
 /***/ }),
