@@ -12,7 +12,7 @@ import { CountryComponent } from './components/country/country.component';
 import { PersonComponent } from './components/person/person.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { TemplesComponent } from './components/temples/temples.component';
+import { TempleComponent } from './components/temple/temple.component';
 
 
 @NgModule({
@@ -24,7 +24,7 @@ import { TemplesComponent } from './components/temples/temples.component';
     LoginComponent,
     NavbarComponent,
     KeysPipe,
-    TemplesComponent
+    TempleComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +33,7 @@ import { TemplesComponent } from './components/temples/temples.component';
       { path: 'person', component: PersonComponent },
       { path: 'country', component: CountryComponent },
       { path: 'calling', component: CallingComponent },
-      { path: 'temples', component: TemplesComponent },
+      { path: 'temple', component: TempleComponent },
       { path: 'login', component: LoginComponent },
       { path: '**', component: LoginComponent }]
     )

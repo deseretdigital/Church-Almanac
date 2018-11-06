@@ -1,20 +1,20 @@
-interface TempleConfig {
+export interface TempleConfig {
     name: string;
-    history?: string;
-    announced?: Date;
-    status?: {
-        construction?: Boolean;
-        renovation?: Boolean;
-        dedicated?: Boolean;
-    };
-    groundbreaking?: Array<Date>;
-    cornerstones?: Array<Date>;
-    location?: {
-        description?: string;
-        address?: string;
-        contact?: string;
-        url?: URL;
-    };
+    status?: number;
+    description?: string;
+    location?: string;
+    street1?: string;
+    street2?: string;
+    state?: string;
+    country?: string;
+    phone?: number;
+    email?: string;
+    dedicator?: string;
+    prayer?: string;
+    dates?: Array<{
+        event?: string;
+        date?: Date;
+    }>;
     architecture?: {
         exterior?: string;
         design?: string;
@@ -22,29 +22,18 @@ interface TempleConfig {
         area?: number;
         dimensions?: string;
         architect?: string;
-        supervisors?: Array<string>;
-        advistor?: string;
+        supervisor?: string;
         contractor?: string;
-        committees?: {
-            building?: string;
-            temple?: string;
-        }
-        master?: string;
-        manager?: string;
-        director?: string;
-        superintendent: string;
-    }
-    district?: string;
-    country?: string;
-    state?: string;
-    area?: string;
-    stakes?: Array<string>;
-    dedication?: {
-        date?: Date;
-        person?: string;
-        prayer?: string;
-        rededication?: Array<Date>;
-    }
+        advisor?: string;
+        buildingCommittee?: string;
+        builder?: string;
+        templeCommittee?: string;
+        project?: {
+            manager?: string;
+            director?: string;
+            superintendent?: string;
+        };
+    };
 }
 
 export class Temple implements TempleConfig {

@@ -1,0 +1,202 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>New Temple</h1>
+      <br />
+    </div>
+    <div class="col-3">
+      <span>Temple Name</span>
+      <input type="text" class="form-control" placeholder="Salt Lake Temple" [(ngModel)]="temple.name">
+    </div>
+    <div class="col-3">
+      <span>Status</span>
+      <select class="form-control" [(ngModel)]="temple.status">
+        <option value="0">Status 1</option>
+        <option value="1">Status 2</option>
+        <option value="2">Status 3</option>
+        <option value="3">Status 4</option>
+      </select>
+    </div>
+    <div class="col-3">
+      <span>Phone</span>
+      <input type="number" class="form-control" placeholder="(555) 555-5555" [(ngModel)]="temple.phone">
+    </div>
+    <div class="col-3">
+      <span>Email</span>
+      <input type="email" class="form-control" placeholder="contact@temple.com" [(ngModel)]="temple.email">
+    </div>
+    <div class="col-12">
+      <span>Temple Description</span>
+      <textarea type="text" class="form-control" placeholder="Dedicated in 1893, it is the sixth temple completed by the church..."
+        [(ngModel)]="temple.description"></textarea>
+    </div>
+    <div class="col-3">
+      <span>Street Address Line 1</span>
+      <input type="text" class="form-control" placeholder="100 S 100 W" [(ngModel)]="temple.street1">
+    </div>
+    <div class="col-3">
+      <span>Street Address Line 2</span>
+      <input type="text" class="form-control" [(ngModel)]="temple.street2">
+    </div>
+    <div class="col-3">
+      <span>Country</span>
+      <select class="form-control" name="birth-countries" [(ngModel)]="temple.country">
+        <option value="" selected disabled>Country</option>
+        <option *ngFor="let country of countries | keys" value="{{ country.key }}">{{ country.value }}</option>
+      </select>
+    </div>
+    <div class="col-3" *ngIf="temple.country && states[temple.country]">
+      <span>State/Providence</span>
+      <select class="form-control" name="birth-state" [(ngModel)]="temple.state">
+        <option selected="" value="" disabled>Select State</option>
+        <option *ngFor="let state of states[temple.country]" value="{{ state }}">{{ state }}</option>
+      </select>
+    </div>
+    <div class="col-3" *ngIf="!temple.country || !states[temple.country]">
+      <span>State/Providence</span>
+      <input type="number" class="form-control" placeholder="Select State" disabled>
+    </div>
+    <div class="col-12">
+      <span>Location Description</span>
+      <textarea type="text" class="form-control" placeholder="The Salt Lake Temple is the centerpiece of the 10-acre Temple Square..."
+        [(ngModel)]="temple.location"></textarea>
+    </div>
+    <div class="col-3">
+      <span>Date</span>
+      <input type="date" class="form-control" placeholder="1/1/18" [(ngModel)]="event.date">
+    </div>
+    <div class="col-3">
+      <span>Event</span>
+      <input type="text" class="form-control" placeholder="Dedicated" [(ngModel)]="event.event">
+    </div>
+    <div class="col-3">
+      <span>Saved Events</span><br />
+      <input type="text" *ngIf="!events.length" class="form-control" placeholder="No Events" disabled>
+      <select class="form-control" id="events" *ngIf="events.length" (change)="editEvent($event)">
+        <option value="null" select disabled>Choose Event</option>
+        <option *ngFor="let x of events; let i = index" value="{{ i }}">{{ x.event }}</option>
+      </select>
+    </div>
+    <div class="col-3">
+      <br />
+      <button class="btn btn-primary" id="add-date" *ngIf="editor.event === null" (click)="addEvent()">Add Date</button>
+      <button class="btn btn-primary" id="add-date" *ngIf="editor.event !== null" (click)="addEvent()">Save Date</button>
+    </div>
+    <div class="col-3">
+      <span>Exterior Finish</span>
+      <input type="text" class="form-control" placeholder="Brick" [(ngModel)]="temple.architecture.exterior">
+    </div>
+    <div class="col-3">
+      <span>Temple Design</span>
+      <input type="text" class="form-control" placeholder="Modern" [(ngModel)]="temple.architecture.design">
+    </div>
+    <div class="col-3">
+      <span>Rooms</span>
+      <input type="number" class="form-control" placeholder="50" [(ngModel)]="temple.architecture.rooms">
+    </div>
+    <div class="col-3">
+      <span>Floor Area</span>
+      <input type="number" class="form-control" placeholder="30000" [(ngModel)]="temple.architecture.area">
+    </div>
+    <div class="col-3">
+      <span>Dimensions</span>
+      <input type="text" class="form-control" placeholder="300 x 300 x 300" [(ngModel)]="temple.architecture.dimensions">
+    </div>
+    <div class="col-3">
+      <span>Architect</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.architect">
+    </div>
+    <div class="col-3">
+      <span>Supervising Architects</span>
+      <input type="text" class="form-control" placeholder="John Smith, Jane Doe" [(ngModel)]="temple.architecture.supervisor">
+    </div>
+    <div class="col-3">
+      <span>Construction Advisor</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.advisor">
+    </div>
+    <div class="col-3">
+      <span>Contractor</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.contractor">
+    </div>
+    <div class="col-3">
+      <span>Building Committee</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.buildingCommittee">
+    </div>
+    <div class="col-3">
+      <span>Master Builder</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.builder">
+    </div>
+    <div class="col-3">
+      <span>Temple Building Committee</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.templeCommittee">
+    </div>
+    <div class="col-3">
+      <span>Project Manager</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.project.manager">
+    </div>
+    <div class="col-3">
+      <span>Project Director</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.project.director">
+    </div>
+    <div class="col-3">
+      <span>Project Superintendent</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.project.superintendent">
+    </div>
+    <div class="col-3">
+      <span>Dedicator</span>
+      <input type="text" class="form-control" placeholder="John Smith" [(ngModel)]="temple.architecture.dedicator">
+    </div>
+    <div class="col-12">
+      <span>Dedicatory Prayer</span>
+      <textarea type="text" id="prayer" class="form-control" [(ngModel)]="temple.architecture.prayer"></textarea>
+    </div>
+    <div class="col-12">
+      <br />
+      <button class="btn btn-primary" *ngIf="!editor.save" (click)="save()">Add Temple</button>
+      <button class="btn btn-primary" *ngIf="editor.save" (click)="save()">Save Temple</button>
+      <button class="btn btn-secondary" (click)="reset()">Clear</button>
+    </div>
+    <div class="col-12">
+      <br />
+      <h1>Temples List</h1>
+    </div>
+    <div class="col-12">
+      <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="search" (keyup)="refine()">
+    </div>
+    <div class="col-12">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">State</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="results">
+          <tr *ngFor="let location of results | keys; let i = index" id="result-{{ i }}">
+            <td>{{ location.value.name }}</td>
+            <td>{{ location.value.state }}</td>
+            <td>
+              <span (click)="edit(location.key)" class="blue">Edit</span>
+              <span data-toggle="modal" data-target="#warning" (click)="editor.uid = location.key" class="red">Delete</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="warning" id="warning"
+  aria-hidden="true" (click)="reset()">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <h1>Are you sure?</h1>
+      <br />
+      <button class="btn btn-primary" (click)="delete()" data-dismiss="modal">Delete Temple</button>
+      <br />
+      <button class="btn btn-secondary" (click)="reset()" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</div>

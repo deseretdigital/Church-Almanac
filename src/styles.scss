@@ -24,6 +24,10 @@ table {
     }
 }
 
+div.row>div {
+    margin-bottom: 15px;
+}
+
 div.row {
     div>span {
         font-size: 0.75em;
